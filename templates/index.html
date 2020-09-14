@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <title>Detection of Mask</title>
+    <style>
+	img {
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+	width: 35%
+	}
+	
+	/* Split the screen in half */
+	.split {
+	  height: 100%;
+	  width: 50%;
+	  margin-top: 5%;
+	  position: fixed;
+	  z-index: 1;
+	  top: 0;
+	  overflow-x: hidden;
+	  padding-top: 10px;
+	}
+
+	/* Control the left side */
+	.left {
+	  left: 0;
+	 
+	  background-color: white;
+	}
+
+	/* Control the right side */
+	.right {
+	  right: 0;
+	  background-color: white;
+	}
+
+	/* If you want the content centered horizontally and vertically */
+	.centered {
+	  position: absolute;
+	  top: 40%;
+	  left: 40%;
+	  transform: translate(-50%, -50%);
+	  text-align: center;
+	}
+
+	/* Style the image inside the centered container, if needed */
+	.centered img {
+	  display: block;
+	  margin-left: auto;
+  	  margin-right: auto;
+	  width: 140%
+	}
+	.header {	
+			top:0;	
+			margin:0px;
+			left: 0px;
+			right: 0px;
+			position: fixed;
+			background: #4a77d4;
+			color: white;
+			box-shadow: 0px 8px 4px grey;
+			overflow: hidden;
+			padding: 15px;
+			font-size: 2.25vw;
+			width: 100%;
+			padding-left:80px;
+			text-align: left;
+		}
+    </style>
+  </head>
+  <body>
+  <div class="header">
+    <div>Mask Identifier with AWS Rekognition</div>
+	
+  </div>
+	
+	<div class="split left">
+		<div class="centered">
+			<img id="bg" class="center" src="{{ url_for('video_feed') }}">
+			<!img id="bg" class="center" src="samp.png">
+		</div>
+	</div>	
+	
+	<div class="split right">
+		<div class="centered" style="top:35%; left:50%;">
+			<h1 style="font-size:50px;color:red;">BE CAUTIOUS!</h1>
+			<h2 style="font-size:35px;color:green">Few are detected without mask.</h2>
+			<p style="font-size:50px;color:blue" id="cnt"></p>
+		</div>
+	</div>
+	
+  </body>
+  <script>
+	
+	window.setInterval(function(){var request = new Request('/count1');
+	//document.getElelemtById("cnt").innerHTML=request;
+	//var request = new Request('/');
+	fetch(request).then(function(response) {
+	  return response.text();
+	}).then(function(text) {
+	  console.log(text.substring(0, 30));
+	  document.getElementById("cnt").innerHTML=text.substring(0, 30);
+	});
+	}, 5000);
+	
+
+  </script>
+</html>
